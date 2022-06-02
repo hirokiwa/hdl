@@ -17,11 +17,10 @@ initial begin
             res = 0;
     #STEP   res = 1;
     #STEP   res = 0;
-    #STEP (STEP * 20)
+    #(STEP * 20)
             $finish;
 end
 
 initial $monitor($stime, "ck=%b res=%b q=%h", ck, res, q);
 
 endmodule
-
