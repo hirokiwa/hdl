@@ -1,4 +1,4 @@
-module mult4s1(ck, res, start, done, a, b, p);
+module mult4s2(ck, res, start, done, a, b, p);
     input ck;       // クロック
     input res;      // リセット
     input start;    // startが1になると、計算を開始する
@@ -11,7 +11,7 @@ module mult4s1(ck, res, start, done, a, b, p);
 
     reg state;
 
-    reg [7:0] a_reg;    // 被乗数を保持
+    reg [3:0] a_reg;    // 被乗数を保持
     reg [3:0] b_reg;    // 乗数を保持
     reg [1:0] cnt;      // 繰り返し回数をカウント
     
@@ -36,9 +36,9 @@ module mult4s1(ck, res, start, done, a, b, p);
                         state <= S0;
                 end
                 S1: begin
-                    p <= p + (a_reg & { 8{b_reg[0]} });
+                    p[7:3] <= p[7:4] + (a_reg & { 4{b_reg[0]} });
+                    p[2:0] <= p[3:1];
 
-                    a_reg <= {a_reg[6:0], 1'b0};
                     b_reg <= {1'b0, b_reg[3:1]};
 
                     cnt <= cnt + 2'b01;
